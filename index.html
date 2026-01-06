@@ -86,6 +86,41 @@ While making payment, you must enter your <b>BGMI ID</b> in the
 <p style="margin-top:30px;font-size:14px">
 © PlutoniumPlayz • Organizer’s decision is final
 </p>
+<script>
+const AIRTABLE_TOKEN = "pattX3e4IdPbxvfRi.58e75489cecda9cd537f30df796734321786343d962063c7b5d54eb382f06910";
+const BASE_ID = "app3utZkBl9oAhlFV";
+const TABLE_NAME = "Registrations";
+
+function submitRegistration() {
+  const inputs = document.querySelectorAll("input");
+  const team = document.querySelector("select").value;
+
+  fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${AIRTABLE_TOKEN}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      fields: {
+        Name: inputs[0].value,
+        BGMI_ID: inputs[1].value,
+        UPI: inputs[2].value,
+        Team: team,
+        Status: "Pending"
+      }
+    })
+  })
+  .then(res => res.json())
+  .then(() => {
+    alert("Registration submitted successfully!");
+  })
+  .catch(() => {
+    alert("Error submitting data");
+  });
+}
+</script>
 
 </body>
 </html>
+
